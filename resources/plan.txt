@@ -1,0 +1,12 @@
+1. build sqlite3 diceware database *complete*
+2. design main page, push data client side
+    basics
+        dropdown for both list name & number of words
+        generate tabled based on input
+        generate page with list content if requrested
+    support
+        About section: Tells about the page & project, liks source & my info
+        Help: Info about diceware
+    advanced
+        allow user to import their own list
+        link to desktop client
