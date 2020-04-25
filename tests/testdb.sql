@@ -2,6 +2,6 @@
 SELECT DISTINCT
     n.name,
     count(w.id)
-from names n
-inner join words w on w.listname_id = n.id
+from name n
+inner join word w on w.listname_id = n.id
 GROUP BY n.name;
