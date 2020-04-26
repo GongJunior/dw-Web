@@ -1,12 +1,13 @@
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from flask import current_app
 from pathlib import Path
-import csv, click
-from flask.cli import with_appcontext
+import csv
 
-engine = create_engine(current_app.config['SQLALCHEMY_DATABASE_URI'], convert_unicode=True)
+db = SQLAlchemy()
+db_loc = f"sqlite:///{Path(__file__).parents[1].absolute() / 'instance/dw.db'}"
+engine = create_engine(db_loc, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
@@ -17,7 +18,7 @@ Base.query = db_session.query_property()
 def init_db():
     from dw.models import Name, Word
     from dw.verifydw import ValidateMappingFile, MappingError, ValidateWordList, DicewareError
-    if not Path(current_app.config['SQLALCHEMY_DATABASE_URI'][10:]).exists():
+    if not Path(db_loc[10:]).exists():
         Base.metadata.create_all(bind=engine)
         print('dw.db created...')
 
@@ -62,9 +63,3 @@ def init_db():
         db_session.commit()
     else:
         print('dw.db already exists, please remove db to build from word lists.')
-
-@click.command('init-db')
-@with_appcontext
-def init_db_command():
-    init_db()
-    click.echo('Initialized the database...')

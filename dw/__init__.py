@@ -1,9 +1,7 @@
 from flask import Flask
 from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
-from dw.database import db_session, init_db
-
-db = SQLAlchemy() 
+from dw.database import db_session, db, init_db
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -18,7 +16,6 @@ def create_app(test_config=None):
         Path(app.instance_path).mkdir(parents=True)
     except FileExistsError:
         pass
-    init_db()
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
@@ -28,6 +25,6 @@ def create_app(test_config=None):
     
     db.init_app(app)
     with app.app_context():
-        from dw.database import init_db_command
+        from dw.commands import init_db_command
         app.cli.add_command(init_db_command)
         return app
