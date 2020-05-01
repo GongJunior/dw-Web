@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from pathlib import Path
 from flask_sqlalchemy import SQLAlchemy
 from dw.database import db_session, db, init_db
@@ -16,15 +16,18 @@ def create_app(test_config=None):
         Path(app.instance_path).mkdir(parents=True)
     except FileExistsError:
         pass
+    @app.route('/')
+    def go_home():
+        return redirect('/generate/diceware')
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
-    @app.route('/')
-    def hello_world():
-        return 'Hi mom!!!'
     
     db.init_app(app)
     with app.app_context():
+        from . import generate
+        app.register_blueprint(generate.bp)
         from dw.commands import init_db_command
         app.cli.add_command(init_db_command)
         return app
+    return app

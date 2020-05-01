@@ -7,6 +7,8 @@ class Name(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     words = relationship('Word', backref='name', lazy=True)
+    def __repr__(self):
+        return f"<Name {self.name}>"
 
 class Word(Base):
     __tablename__ = 'words'
@@ -14,3 +16,5 @@ class Word(Base):
     roll = Column(Integer, nullable=False) 
     word = Column(String(120), nullable=False)
     listname_id = Column(Integer, ForeignKey('names.id'), nullable=False)
+    def __repr__(self):
+        return f"<Word {self.roll}>"

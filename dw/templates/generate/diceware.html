@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{%block title %}Names are here{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for name in names %}
+        <p class="body">{{ name.name }}</p>
+    {% endfor %}
+{% endblock %}
