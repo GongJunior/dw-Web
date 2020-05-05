@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<title>{% block title %} {% endblock %} - Diceware</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-    <h1>Diceware</h1>
-</nav>
-<section class="content">
-    <header>
-        {% block header %}{% endblock %}
-    </header>
-    {% block content %}{% endblock %}
-</section>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Diceware based passphrase generator">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <title>{% block title %} {% endblock %} - Diceware</title>
+    </head>
+    <body>
+        <nav>
+            <h1>Diceware</h1>
+        </nav>
+
+        <section class="content">
+            <header>
+                {% block header %}{% endblock %}
+            </header>
+            {% block content %}{% endblock %}
+        </section>
+    </body>
+</html>

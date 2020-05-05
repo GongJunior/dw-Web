@@ -24,10 +24,14 @@ def create_app(test_config=None):
         db_session.remove()
     
     db.init_app(app)
-    with app.app_context():
-        from . import generate
-        app.register_blueprint(generate.bp)
-        from dw.commands import init_db_command
-        app.cli.add_command(init_db_command)
-        return app
+    from . import generate
+    app.register_blueprint(generate.bp)
+    from dw.commands import init_db_command
+    app.cli.add_command(init_db_command)
     return app
+    # with app.app_context():
+    #     from . import generate
+    #     app.register_blueprint(generate.bp)
+    #     from dw.commands import init_db_command
+    #     app.cli.add_command(init_db_command)
+    #     return app
