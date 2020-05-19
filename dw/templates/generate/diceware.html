@@ -5,7 +5,42 @@
 {% endblock %}
 
 {% block content %}
-    {% for name in names %}
-        <p class="body">{{ name.name }}</p>
-    {% endfor %}
+        <!--load word lists on page load or selected word list into page-->
+        <!--use js to generate dropdown list items-->
+        <!--call generate function to display rolls and words-->
+        <!--add input option for number of words-->
+    <form class="form-group">
+        <label class="sr-only" for="numOfWords">Number of Words</label>
+        <div class="form-group mb-3" style="width: 100px;">
+            <select class="form-control" id="numOfWords">
+                {% for i in range(3,14) %}
+                    <option>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <label class="sr-only" for="dropdownMenuButton">List Options</label>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select List
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for name in names %}
+                    <a class="dropdown-item" href="#" onclick='generateResult("{{ name.name }}")'>{{ name.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <label class="sr-only" for="output">Diceware Output</label>
+        <div class="jumbotron">
+            <p id="passphrase" class="lead"></p>
+            <p id="allrolls"></p>
+            <hr class="my-2">
+        </div>
+    </form>
+
+    <p id="result"></p>
+    <script>
+        window.onload = (event) => {
+            $.get("/generate/lists",function(data){loadDicewaretoMemory(data)});
+        };
+    </script>
 {% endblock %}
