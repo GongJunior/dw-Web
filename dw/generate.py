@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, url_for, jsonify
+from flask import Blueprint, render_template, url_for, jsonify
 from dw.models import Name
 
 bp = Blueprint('generate', __name__, url_prefix='/generate')

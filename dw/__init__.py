@@ -18,14 +18,15 @@ def create_app(test_config=None):
         pass
     @app.route('/')
     def go_home():
-        return redirect('/generate/diceware')
+        return redirect(url_for('generate.diceware'))
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db_session.remove()
     
     db.init_app(app)
-    from . import generate
+    from . import generate, about
     app.register_blueprint(generate.bp)
+    app.register_blueprint(about.bp)
     from dw.commands import init_db_command
     app.cli.add_command(init_db_command)
     return app

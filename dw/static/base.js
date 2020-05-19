@@ -24,12 +24,13 @@ function generateResult(listName){
         rolls += wordID + " ";
         words += currentList[wordID] + " ";
     }
-    sentOutputToPage(words,rolls);
+    sentOutputToPage(words,rolls,listName);
 }
 
-function sentOutputToPage(words, rolls){
-    document.getElementById("passphrase").innerHTML = words;
-    document.getElementById("allrolls").innerHTML = rolls;
+function sentOutputToPage(words, rolls, listName){
+    document.getElementById("passphrase").innerHTML = `<b>Passphase: </b> ${words.trim()}`;
+    document.getElementById("allrolls").innerHTML = `<b>Rolls:</b> ${rolls.trim()}`;
+    document.getElementById("listused").innerHTML = `<b>List Used:</b> ${listName.trim()}`;
 }
 
 function rollTest(){

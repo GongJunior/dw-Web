@@ -12,7 +12,7 @@
         link to desktop client
 
 circle back
-1. caching data from database
+1. add proper config file
 2. keeping track of when db changes
 3. The script from “http://127.0.0.1:5000/static/base.js” was loaded even though its MIME type (“text/plain”) is not a valid JavaScript MIME type. (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)
 4. Check if localstorage & sessionstorage is available, if not come up with backup plan
