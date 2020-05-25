@@ -1,1 +1,9 @@
 {% extends 'base.html' %}
+
+{% block pa %}active{% endblock %} 
+
+{% block pr %}<span class="sr-only">(current)</span>{% endblock %}
+
+{% block header %}
+    <h1 class="h1 text-center">{%block title %}Purpose of this project{% endblock %}</h1>
+{% endblock %}

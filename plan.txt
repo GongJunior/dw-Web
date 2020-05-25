@@ -7,16 +7,31 @@
     support
         About section: Tells about the page & project, liks source & my info
         Help: Info about diceware
+        Add table to track number of db queries
     advanced
         allow user to import their own list
         link to desktop client
 
 circle back
-1. add proper config file
+1. add proper config file *complete*
+
 2. keeping track of when db changes
+    use pip install flask-migrate to handle this if added
+    flask-migrate will handle schema setup and any changes
+    database.py would need to be changed to importing data only, flask-migrate would handle creation
+    src=https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iv-database
+    
 3. The script from “http://127.0.0.1:5000/static/base.js” was loaded even though its MIME type (“text/plain”) is not a valid JavaScript MIME type. (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)
+    A: https://github.com/pallets/flask/issues/1045 
+        - windows system config sending incorrect headers
+        - try in config:
+            import mimetypes
+                mimetypes.add_type('text/js', '.js')
+
 4. Check if localstorage & sessionstorage is available, if not come up with backup plan
+
 5. Check if list has been updated, if so clear localstorage
 
-From Bootstrap:
-    dropdown
+6. Download Bootstrap to local repository?
+
+7. Is Bootstrap slim worth addtl changes?

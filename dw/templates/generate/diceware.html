@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{%block title %}Diceware Passphrase Generator{% endblock %}</h1>
+    <h1 class="h1 text-center">{%block title %}Diceware Passphrase Generator{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-    <form class="form-group">
+    <form class="form-inline justify-content-center">
         <label class="sr-only" for="numOfWords">Number of Words</label>
-        <div class="form-group mb-3" style="width: 100px;">
+        <div class="form-group mb-3 mr-3">
             <select class="form-control" id="numOfWords">
                 {% for i in range(3,14) %}
                     <option>{{ i }}</option>
@@ -25,18 +25,19 @@
                 {% endfor %}
             </div>
         </div>
-        <label class="sr-only" for="output">Diceware Output</label>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Passphrase Result</h5>
-                <h6 id="listused" class="card-subtitle mb-2 text-muted"></h6>
-                <p id="passphrase" class="card-text mb-0"></p>
-                <p id="allrolls" class="card-text"></p>
-            </div>
-        </div>
     </form>
+    <br/>
 
-    <p id="result"></p>
+    <label class="sr-only" for="output">Diceware Output</label>
+    <div class="card mx-auto" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Passphrase Result</h5>
+            <h6 id="listused" class="card-subtitle mb-2 text-muted"></h6>
+            <p id="passphrase" class="card-text mb-0"></p>
+            <p id="allrolls" class="card-text"></p>
+        </div>
+    </div>
+
     <script>
         window.onload = (event) => {
             $.get("/generate/lists",function(data){loadDicewaretoMemory(data)});

@@ -33,10 +33,6 @@ function sentOutputToPage(words, rolls, listName){
     document.getElementById("listused").innerHTML = `<b>List Used:</b> ${listName.trim()}`;
 }
 
-function rollTest(){
-    document.getElementById("result").innerHTML = getRolls();
-}
-
 function loadDicewaretoMemory(package){
     for (const prop in package){
         if (!localStorage.getItem(prop)){

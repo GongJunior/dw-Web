@@ -3,10 +3,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from pathlib import Path
+from os import environ
 import csv
 
-db = SQLAlchemy()
-db_loc = f"sqlite:///{Path(__file__).parents[1].absolute() / 'instance/dw.db'}"
+#db = SQLAlchemy()
+db_loc = environ.get('DB_URI')
 engine = create_engine(db_loc, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
