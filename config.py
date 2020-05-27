@@ -9,8 +9,17 @@ class Config:
     SQLALCHEMY_DATABASE_URI = environ.get('DB_URI') or f"sqlite:///{Path(basedir / 'intance/dw.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = environ.get('SECRET_KEY')
+    DEBUG = False
+    TESTING = False
 
 class DevConfig(Config):
+    SECRET_KEY='dev'
+    FLASK_ENV = "development"
+    DEBUG = True
+    TESTING = True
+
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
     SECRET_KEY='dev'
     FLASK_ENV = "development"
     DEBUG = True

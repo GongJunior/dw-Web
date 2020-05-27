@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, url_for, jsonify
+from flask import render_template, url_for, jsonify
 from dw.models import Name
+from dw.generate import bp
 
-bp = Blueprint('generate', __name__, url_prefix='/generate')
-
-@bp.route('/diceware', methods=('GET','POST'))
+@bp.route('/diceware')
 def diceware():
     names = Name.query.all()
     return render_template('generate/diceware.html', names=names)

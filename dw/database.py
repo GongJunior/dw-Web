@@ -3,27 +3,24 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from pathlib import Path
-from os import environ
+from datetime import datetime, timedelta
+from dw import db
 import csv
 
-#db = SQLAlchemy()
-db_loc = environ.get('DB_URI')
-engine = create_engine(db_loc, convert_unicode=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
+def init_db(app):
 
-Base = declarative_base()
-Base.query = db_session.query_property()
+    db_loc = app.config['SQLALCHEMY_DATABASE_URI']
 
-def init_db():
     from dw.models import Name, Word
     from dw.verifydw import ValidateMappingFile, MappingError, ValidateWordList, DicewareError
-    if not Path(db_loc[10:]).exists():
-        Base.metadata.create_all(bind=engine)
-        print('dw.db created...')
 
-        map_loc = Path(__file__).parent.absolute() / 'resources/map.csv'
+    if Path(db_loc[10:]).exists():
+        print(f'db found @{db_loc}')
+
+        words_loc = Path(__file__).parent.absolute() / 'static/dwlists'
+        map_loc = Path(__file__).parent.absolute() / 'static/dwmap.csv'
+        current_tables = Name.query.all()
+
         with open(map_loc,newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             map_rows = list(reader)
@@ -36,19 +33,27 @@ def init_db():
                 print(i)
 
         for row in map_rows:
-            words_loc = Path(__file__).parent.absolute() / 'dwlists' / row['file']
+            file_loc = words_loc / row['file']
+            file_utc = datetime.now() - timedelta(seconds=file_loc.stat().st_mtime) 
             name = Name(name=row['name'])
+            db_utc = [t.last_updated for t in current_tables if t.name == name]
 
-            with open(words_loc,newline='', encoding='utf-8-sig') as csvwords:
+            if not db_utc:
+                db_utc = [None]
+            if db_utc[0] is not None:
+                if file_utc <= db_utc[0]:
+                    continue
+
+            with open(file_loc,newline='', encoding='utf-8-sig') as csvwords:
                 word_reader = csv.DictReader(csvwords)
                 word_rows = list(word_reader)
-            print(f'Importing words from { words_loc }...')
+            print(f'Importing words from { file_loc }...')
             count,errors = ValidateWordList(word_rows)
 
             try:
                 if count != 7776 or len(errors) > 0: raise DicewareError("Error in file",errors)
             except DicewareError as e:
-                print(f'Errors found in {words_loc}')
+                print(f'Errors found in {file_loc}')
                 print(e.message)
                 for _ in e.errors:
                     print(f'row: {_.row}\troll: {_.row_data["roll"]}\tword: {_.row_data["word"]}')
@@ -57,10 +62,11 @@ def init_db():
             for word_row in word_rows:
                 word = Word(roll=int(word_row['roll']), word=word_row['word'])
                 name.words.append(word)
-            db_session.add(name)
-            print(f'{words_loc} has successfully been added \u2714')
+            db.session.add(name)
+            print(f'{file_loc} has successfully been added \u2714')
 
         print('Comitting lists to the database...\u2714')
-        db_session.commit()
+        db.session.commit()
     else:
-        print('dw.db already exists, please remove db to build from word lists.')
+        print(f'db not found @{db_loc}, run flask migrate to create.')
+

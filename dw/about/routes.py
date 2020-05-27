@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, url_for
-
-bp = Blueprint('about', __name__, url_prefix='/about')
+from flask import render_template, url_for
+from dw.about import bp
 
 @bp.route('/diceware')
 def diceware():
