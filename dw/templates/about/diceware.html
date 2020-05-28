@@ -9,5 +9,36 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container text-center">
+        <p class="text-left">
+            Diceware is a system used to generate pasphrases. The strength of Diceware lies in the idea that a group of randomly rolled standard words is very inefficient for a computer to guess. The general idea of the process is as follows:
+        </p>
+        <ol class="text-left">
+            <li>Acquire a standard dice and <a class="text-info" target="_blank" rel="noreferrer noopener" href="#">list.</li></a>
+            <li>Roll the die 5 times, recording each roll in order.</li>
+            <li>Select a word from the list corresponding to the rolls in step 2</li>
+            <li>Repeat steps 2 & 3 until you're satisfied with the number of words</li>
+        </ol>
+        <p class="text-left">
+            Obviously with pen and paper this would be a very time consuming process to go through every time you need a password, but would offer true randomness in passowrd generation. While apps like this cannot truely replicate the randomness found in the real world, their purpose is to try to strike a balance between convenience and security. 
+        </p>
+        <div class="row justify-content-center">
+            <h2 class="text-center">Additional Resources</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center">Required Post</h3>
+                <p class="text-left">XKCD has provided a fun commentary about this is here: <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://xkcd.com/936/">https://xkcd.com/936/</a></p>
+                <a target="_blank" rel="noreferrer noopener" href="https://imgs.xkcd.com/comics/password_strength.png"> <img class="img-fluid" src=https://imgs.xkcd.com/comics/password_strength.png alt="Password Strength"/></a>
+            </div>
+            <div class="col">
+                <h3 class="text-center">Links</h3>
+                <ul class="text-left">
+                    <li>Thing 1</li>
+                    <li>Thing 2</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
