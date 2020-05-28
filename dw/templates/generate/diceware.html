@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+    <div class="text-center" id="intro">Loadiing Assets</div>
+    <br>
     <form class="form-inline justify-content-center">
         <label class="sr-only" for="numOfWords">Number of Words</label>
         <div class="form-group mb-3 mr-3">
@@ -40,7 +42,13 @@
 
     <script>
         window.onload = (event) => {
-            $.get("/generate/lists",function(data){loadDicewaretoMemory(data)});
+            $.get("/generate/lists",function(data){
+                loadDicewaretoMemory(data)
+            }).done(function(){
+                $("#intro").text("Network can be disabled while generating phrases")
+            }).fail(function(){
+                $("#intro").text("ERROR: Could not load assets")
+            });
         };
     </script>
 {% endblock %}

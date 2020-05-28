@@ -8,13 +8,11 @@ from logging.handlers import RotatingFileHandler
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app(config='config.DevConfig'):
+def create_app(config='config.Config'):
     app = Flask(__name__, instance_relative_config=True)
 
-    if config is None:
-        app.config.from_object('config.Config')
-    else:
-        app.config.from_object(config)
+    app.config.from_object(config)
+
     try:
         Path(app.instance_path).mkdir(parents=True)
     except FileExistsError:
