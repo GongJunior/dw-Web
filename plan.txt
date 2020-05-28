@@ -8,6 +8,9 @@
         About section: Tells about the page & project, liks source & my info
         Help: Info about diceware
         Add table to track number of db queries
+        implement more db tests:
+            will only update if file is newer
+            stops loading on mapping error
     advanced
         allow user to import their own list
         link to desktop client
@@ -15,7 +18,7 @@
 circle back
 1. add proper config file *complete*
 
-2. keeping track of when db changes
+2. keeping track of when db changes *complete*
     use pip install flask-migrate to handle this if added
     flask-migrate will handle schema setup and any changes
     database.py would need to be changed to importing data only, flask-migrate would handle creation
