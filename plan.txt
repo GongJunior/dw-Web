@@ -32,8 +32,8 @@ circle back
                 mimetypes.add_type('text/js', '.js')
 
 4. Check if localstorage & sessionstorage is available, if not come up with backup plan
-
 5. Check if list has been updated, if so clear localstorage
+    A: Update to using in memory as primary
 
 6. Download Bootstrap to local repository?
 

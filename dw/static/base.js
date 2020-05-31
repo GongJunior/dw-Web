@@ -15,7 +15,8 @@ function generateResult(listName){
     let rolls = "";
     let words = "";
     let numWords;
-    let currentList = JSON.parse(localStorage.getItem(listName));
+    let currentList = mem[listName];
+    //let currentList = JSON.parse(localStorage.getItem(listName));
 
     numWords = document.getElementById('numOfWords').value;
 
@@ -33,10 +34,24 @@ function sentOutputToPage(words, rolls, listName){
     document.getElementById("listused").innerHTML = `<b>List Used:</b> ${listName.trim()}`;
 }
 
+let mem = "";
 function loadDicewaretoMemory(package){
+    mem = package;
+    console.log(mem);
+}
+
+function loadDicewaretoStorage(package){
     for (const prop in package){
         if (!localStorage.getItem(prop)){
             localStorage.setItem(prop,JSON.stringify(package[prop]));
+        }
+    }
+}
+
+function loadDicewaretoSession(package){
+    for (const prop in package){
+        if (!sessionStorage.getItem(prop)){
+            sessionStorage.setItem(prop,JSON.stringify(package[prop]));
         }
     }
 }

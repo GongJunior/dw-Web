@@ -7,3 +7,14 @@
 {% block header %}
     <h1 class="h1 text-center">{%block title %}Purpose of this project{% endblock %}</h1>
 {% endblock %}
+
+{% block content %}
+    <div class="container text-left">
+        <p>
+            The purpose of this project was to make an easy access, client-side, roll generator for my personal needs. This was heavily inspired from <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://www.rempe.us/diceware/">https://www.rempe.us/diceware/</a>, with a few divergences for my own convenience. I encourage you to check out this site as there is a lot of solid information if you'd like to learn more.
+        </p>
+        <p>
+            Currently, this tool has a couple simple uses.  First, the <a class="text-info" href="{{ url_for('generate.diceware') }}">main</a> page can be used to generate a passphrase or a set of rolls. Secondly, if you'd like to fetch the entire dataset in JSON format, you can access <a class="text-info" href="{{ url_for('generate.get_data') }}">{{ url_for('generate.get_data', _external=True) }}</a>.  This file contains all loaded lists in an easily parsble format. Lastly, if you'd like run the site locally, this project can be installed from <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://github.com/GongJunior/dw-Web">Github.</a> Running it locally will allow you customize your own list set if necessary.
+        </p>
+    </div>
+{% endblock %}

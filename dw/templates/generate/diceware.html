@@ -42,7 +42,7 @@
 
     <script>
         window.onload = (event) => {
-            $.get("/generate/lists",function(data){
+            $.get("{{ url_for('generate.get_data') }}",function(data){
                 loadDicewaretoMemory(data)
             }).done(function(){
                 $("#intro").text("Network can be disabled while generating phrases")
