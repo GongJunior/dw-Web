@@ -11,9 +11,9 @@ def diceware():
 def get_data():
     names = Name.query.all()
     dwLists = {}
-    for name in names:
+    for i,name in enumerate(names):
         dwLists[name.name] = {}
-        for word in names[0].words:
+        for word in names[i].words:
             dwLists[name.name][word.roll] = word.word
 
     return jsonify(dwLists)

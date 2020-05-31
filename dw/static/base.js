@@ -37,7 +37,6 @@ function sentOutputToPage(words, rolls, listName){
 let mem = "";
 function loadDicewaretoMemory(package){
     mem = package;
-    console.log(mem);
 }
 
 function loadDicewaretoStorage(package){
