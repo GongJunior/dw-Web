@@ -1,15 +1,13 @@
+from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 from pathlib import Path
 from datetime import datetime, timedelta
 from dw import db
 import csv
 
-def init_db(app):
+def init_db():
 
-    db_loc = app.config['SQLALCHEMY_DATABASE_URI']
+    db_loc = current_app.config['SQLALCHEMY_DATABASE_URI']
 
     from dw.models import Name, Word
     from dw.verifydw import ValidateMappingFile, MappingError, ValidateWordList, DicewareError

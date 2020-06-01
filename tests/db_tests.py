@@ -20,7 +20,7 @@ class DbImportCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_load_from_empty(self):
-        init_db(self.app)
+        init_db()
         loaded_tables = Name.query.all()
         #get number of valid file to name maps
         #assert num tables loaded -eq num valid maps

@@ -14,7 +14,7 @@ Generates rolls and passphrase client side
     ```
 1. Required environment variables are:
     * FLASK_APP=start.py
-    * FLASK_ENV=development *or production*
+    * FLASK_ENV=production
     Execute *env.ps1* to set defaults
     ```
     (venv) $ & .\env.ps1
@@ -25,5 +25,7 @@ Generates rolls and passphrase client side
     ```
     (venv) $ flask db migrate
     (venv) $ flask upgrade
+    (venv) $ flask init-db
     (venv) $ flask run
+    ```
 
