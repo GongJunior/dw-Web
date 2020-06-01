@@ -17,7 +17,7 @@ def init_db():
 
         words_loc = Path(__file__).parent.absolute() / 'static/dwlists'
         map_loc = Path(__file__).parent.absolute() / 'static/dwmap.csv'
-        current_tables = Name.query.all()
+        current_tables = Name.query.order_by(Name.last_updated.desc()).all()
 
         with open(map_loc,newline='') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -34,13 +34,15 @@ def init_db():
             file_loc = words_loc / row['file']
             file_utc = datetime.now() - timedelta(seconds=file_loc.stat().st_mtime) 
             name = Name(name=row['name'])
-            db_utc = [t.last_updated for t in current_tables if t.name == name]
+            found_names = [(t.last_updated,t) for t in current_tables if t.name == name.name]
+            db_utc = found_names[0][0] if found_names else None
 
-            if not db_utc:
-                db_utc = [None]
-            if db_utc[0] is not None:
-                if file_utc <= db_utc[0]:
+            if db_utc is not None and len(found_names) < 2:
+                if file_utc <= db_utc:
                     continue
+            if len(found_names) > 0:
+                print(f'Removing: { name } x {len(found_names)}')
+                Name.query.filter_by(name=name.name).delete()
 
             with open(file_loc,newline='', encoding='utf-8-sig') as csvwords:
                 word_reader = csv.DictReader(csvwords)
@@ -63,7 +65,7 @@ def init_db():
             db.session.add(name)
             print(f'{file_loc} has successfully been added \u2714')
 
-        print('Comitting lists to the database...\u2714')
+        print('Comitting any changes to the database...\u2714')
         db.session.commit()
     else:
         print(f'db not found @{db_loc}, run flask migrate to create.')
