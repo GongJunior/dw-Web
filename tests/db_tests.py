@@ -1,11 +1,13 @@
 from pathlib import Path
 from datetime import datetime, timedelta
-import unittest, csv
+import unittest, csv, json
+from flask import url_for
 from dw import db, create_app
 from dw.models import Name, Word
 from config import TestConfig
 from dw.database import init_db
 from dw.verifydw import ValidateMappingFile, MappingError
+from random import randint, choice
 
 class DbImportCase(unittest.TestCase):
     def setUp(self):
@@ -19,7 +21,7 @@ class DbImportCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_demo(self):
+    def test_falure_condition(self):
         self.assertTrue(False, "Mandatory Fail")
 
     def test_load_from_empty(self):
@@ -65,7 +67,23 @@ class DbImportCase(unittest.TestCase):
         self.assertEqual(len(loaded_tables_2),len(Name.query.all()))
         self.assertEqual(7776,len(Word.query.all())/len(Name.query.all()))
 
+    def test_list_endpoint(self):
+        from dw.generate.routes import get_data
 
+        init_db()
+        current_data = Name.query.all()
+        print(f'{len(current_data)} lists loaded')
+        self.assertEqual(3,len(current_data))
+        result = json.loads(get_data().data)
+
+        for _ in range(100):
+            samp = choice(current_data)
+            samp_roll = choice([_[0] for _ in db.session.query(Word.roll).distinct()])
+            test_out = f'L:{samp.name},R:{samp_roll}'
+            with self.subTest(i=test_out):
+                word_db = [w.word for w in samp.words if w.roll == samp_roll][0]
+                word_ep = result[samp.name][str(samp_roll)]
+                self.assertEqual(word_db,word_ep)
 
 if __name__ == '__main__':
     unittest.main()
