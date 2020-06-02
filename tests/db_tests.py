@@ -72,11 +72,10 @@ class DbImportCase(unittest.TestCase):
 
         init_db()
         current_data = Name.query.all()
-        print(f'{len(current_data)} lists loaded')
         self.assertEqual(3,len(current_data))
         result = json.loads(get_data().data)
 
-        for _ in range(100):
+        for _ in range(500):
             samp = choice(current_data)
             samp_roll = choice([_[0] for _ in db.session.query(Word.roll).distinct()])
             test_out = f'L:{samp.name},R:{samp_roll}'
