@@ -23,8 +23,8 @@ Generates rolls and passphrase client side
 1. Setup your database and store URI in DB_URI
 1. Run migrations then start flask
     ```
-    (venv) $ flask db migrate
-    (venv) $ flask upgrade
+    (venv) $ flask db init
+    (venv) $ flask db upgrade
     (venv) $ flask init-db
     (venv) $ flask run
     ```

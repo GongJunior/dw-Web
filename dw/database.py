@@ -13,7 +13,7 @@ def init_db():
     from dw.verifydw import ValidateMappingFile, MappingError, ValidateWordList, DicewareError
 
     if Path(db_loc[10:]).exists():
-        print(f'db found @{db_loc}')
+        print(f'DB context: {db_loc}')
 
         words_loc = Path(__file__).parent.absolute() / 'static/dwlists'
         map_loc = Path(__file__).parent.absolute() / 'static/dwmap.csv'
@@ -65,8 +65,8 @@ def init_db():
             db.session.add(name)
             print(f'{file_loc} has successfully been added \u2714')
 
-        print('Comitting any changes to the database...\u2714')
         db.session.commit()
+        print('Initialization is complete!...\u2714')
     else:
         print(f'db not found @{db_loc}, run flask migrate to create.')
 

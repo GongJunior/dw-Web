@@ -7,7 +7,7 @@ class Name(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     last_updated = db.Column(db.DateTime, default=datetime.utcnow)
-    words = relationship('Word', backref='name', lazy=True)
+    words = relationship('Word', backref='name', lazy=True, cascade="all, delete-orphan")
     def __repr__(self):
         return f"<Name {self.name}>"
 

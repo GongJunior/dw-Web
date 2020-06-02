@@ -19,6 +19,9 @@ class DbImportCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
+    def test_demo(self):
+        self.assertTrue(False, "Mandatory Fail")
+
     def test_load_from_empty(self):
         init_db()
         loaded_tables = Name.query.all()
@@ -38,6 +41,31 @@ class DbImportCase(unittest.TestCase):
         for i in loaded_tables:
             with self.subTest(pkg= i.name):
                 self.assertEqual(len(i.words), 7776)
+
+    def test_load_with_no_changes(self):
+        init_db()
+        loaded_tables_1 = Name.query.all()
+
+        init_db()
+        loaded_tables_2 = Name.query.all()
+
+        self.assertEqual(len(loaded_tables_1),len(loaded_tables_2))
+        for i in loaded_tables_2:
+            with self.subTest(pkg= i.name):
+                self.assertEqual(len(i.words), 7776)
+        self.assertEqual(7776,len(Word.query.all())/len(loaded_tables_2))
+
+        rm= Name.query.filter(Name.id==1).first()
+        db.session.delete(rm)
+        db.session.commit()
+        self.assertEqual(len(loaded_tables_2)-1,len(Name.query.all()))
+        self.assertEqual(7776,len(Word.query.all())/(len(loaded_tables_2)-1))
+
+        init_db()
+        self.assertEqual(len(loaded_tables_2),len(Name.query.all()))
+        self.assertEqual(7776,len(Word.query.all())/len(Name.query.all()))
+
+
 
 if __name__ == '__main__':
     unittest.main()
