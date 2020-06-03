@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="h1 text-center">{%block title %}{{ name }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        {% for roll in rolls %}
+            <span>{{ roll.roll }}</span>
+            <span>{{ roll.word }}</span>
+            <br/>
+        {% endfor %}
+    </div>
+{% endblock %}

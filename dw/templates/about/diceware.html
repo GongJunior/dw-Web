@@ -11,10 +11,10 @@
 {% block content %}
     <div class="container text-center">
         <p class="text-left">
-            Diceware is a system used to generate pasphrases. The strength of Diceware lies in the idea that a group of randomly rolled standard words is very inefficient for a computer to guess. The general idea of the process is as follows:
+            Diceware is a system used to generate pasphrases. The strength of Diceware lies in the idea that a group of randomly rolled standard words is very inefficient for a computer to guess, but easy to remember. The general idea of the process is as follows:
         </p>
         <ol class="text-left">
-            <li>Acquire a standard dice and <a class="text-info" target="_blank" rel="noreferrer noopener" href="#">list.</li></a>
+            <li>Acquire a standard dice and <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://theworld.com/%7Ereinhold/diceware.wordlist.asc">list.</li></a>
             <li>Roll the die 5 times, recording each roll in order.</li>
             <li>Select a word from the list corresponding to the rolls in step 2</li>
             <li>Repeat steps 2 & 3 until you're satisfied with the number of words</li>
@@ -37,6 +37,9 @@
                     <li>EFF: <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://www.eff.org/dice">https://www.eff.org/dice</a></li>
                     <li>Rempe: <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://www.rempe.us/diceware/#eff">https://www.rempe.us/diceware/</a></li>
                     <li>Reinhold: <a class="text-info" target="_blank" rel="noreferrer noopener" href="https://theworld.com/~reinhold/diceware.html">https://theworld.com/~reinhold/diceware.html</a></li>
+                    {% for name in names %}
+                    <li>{{ name.name }}: <a class="text-info" target="_blank" rel="noreferrer noopener" href="{{ url_for('about.get_list', listname=name.name) }}">{{ name.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
