@@ -44,8 +44,9 @@ def create_app(config='config.Config'):
     from dw.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
-    from dw.commands import init_db_command
+    from dw.commands import init_db_command, clear_db_command
     app.cli.add_command(init_db_command)
+    app.cli.add_command(clear_db_command)
     
     return app
 

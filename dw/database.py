@@ -1,18 +1,19 @@
 from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import OperationalError
 from pathlib import Path
 from datetime import datetime, timedelta
 from dw import db
+from dw.models import Name, Word
 import csv
 
 def init_db():
 
     db_loc = current_app.config['SQLALCHEMY_DATABASE_URI']
 
-    from dw.models import Name, Word
     from dw.verifydw import ValidateMappingFile, MappingError, ValidateWordList, DicewareError
 
-    if Path(db_loc[10:]).exists():
+    try:
         print(f'DB context: {db_loc}')
 
         words_loc = Path(__file__).parent.absolute() / 'static/dwlists'
@@ -67,6 +68,14 @@ def init_db():
 
         db.session.commit()
         print('Initialization is complete!...\u2714')
-    else:
-        print(f'db not found @{db_loc}, run flask migrate to create.')
+    except OperationalError:
+        print(f'Unable to connect to {db_loc}\nPlease verify connection string and flask upgrade.')
 
+def clear_db():
+    _=[db.session.delete(rm) for rm in Name.query.all()]
+    db.session.commit()
+
+    if Name.query.count() == 0 and Word.query.count() == 0:
+        print("Tables have been cleared.")
+    else:
+        print("Clear failed, manual deletes required.")
